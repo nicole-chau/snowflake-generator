@@ -63,6 +63,7 @@ def create_snowflake(axiom, num_iter, rules):
     Returns:
         None
     """
+    print("HI")
     lsystem = LSystem(rules)
     processed_string = lsystem.process_all(int(num_iter), axiom)
 
@@ -83,7 +84,8 @@ def home():
         The required return by Flask so the user is redirected to the /draw URL
     """
     rules = parse_rules("rules.json")
-    return render_template("draw_template.html", rules=rules.items())
+    # return render_template("draw_template.html", rules=rules.items())
+    return redirect("/draw")
 
 
 @app.route("/draw", methods=["GET", "POST"])
@@ -120,14 +122,14 @@ def handle_draw():
         # check that uploaded file is json file 
         if not rules_json.endswith(".json"):
             flash("Please upload a json file")
-            return redirect("/draw")
+            return redirect("/")
 
         axiom = request.form.get("axiom")
         # check for invalid symbols in axiom input 
         for char in axiom:
             if char not in ALLOWED_SYMBOLS:
                 flash("The only symbols allowed are: 'F', 'X', '-', '+', '[', ']', '<', '>'")
-                return redirect("/draw")
+                return redirect("/")
 
         # get number of l system iterations
         num_iter = request.form.get("iterations")
