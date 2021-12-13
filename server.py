@@ -50,7 +50,18 @@ def parse_rules(rules_json):
 
 def create_snowflake(axiom, num_iter, rules):
     """
+    Creates the snowflake drawing by initializing L-system and Snowflake turtle. 
+    Saves the image after turtle is done drawing.
+
+    Args:
+        rules (dict): dictionary of rules for L-system
+                      NOTE: makes several assumptions about input rules:
+                      1. Precondition only consists of 1 symbol
+                      2. Rules only contain valid symbols
+                      3. Dictionary is non-empty, i.e. at least 1 valid rule is defined
     
+    Returns:
+        None
     """
     lsystem = LSystem(rules)
     processed_string = lsystem.process_all(int(num_iter), axiom)
@@ -69,8 +80,7 @@ def home():
         None
 
     Returns:
-        The required return by Flask so the user is redirected to the /draw
-        URL
+        The required return by Flask so the user is redirected to the /draw URL
     """
     rules = parse_rules("rules.json")
     return render_template("draw_template.html", rules=rules.items())

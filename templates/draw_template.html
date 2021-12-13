@@ -18,11 +18,11 @@ Draw a snowflake with the default settings or adjust the pattern using the optio
     <tbody>
       <tr>
         <td>F, X</td>
-        <td>go forward by specified distance</td>
+        <td>go forward by specified distance (40 units)</td>
       </tr>
       <tr>
         <td>-, +</td>
-        <td>rotate right/left</td>
+        <td>rotate right/left (30 deg)</td>
       </tr>
       <tr>
         <td>[</td>
@@ -47,16 +47,32 @@ Draw a snowflake with the default settings or adjust the pattern using the optio
 <form method=post enctype=multipart/form-data>
   Axiom: <input type=text name=axiom value="FX">
   <br>
-  Number of L-System Iterations: 
+  Number of L-System iterations: 
   <input type=number name=iterations min="1" max="5" value="2" required>
   <br>
-  Default Rules:
+  Default rules:
   <ul>
       {% for key, value in rules %} 
           <li>{{ key }} &rarr; {{ value[0] }}</li>
       {% endfor %}
   </ul>
+  <br>
+  Upload .json file containing customized rules:
   <input type=file name=rules>
+  <br>
+  If no file is uploaded then the default rules will be applied.
+  NOTE: Assumed that any user defined .json file for rules satisfies the following conditions:
+  <ol>
+    <li>
+      Precondition only consists of 1 symbol
+    </li>
+    <li>
+      Rules only contain valid symbols
+    </li>
+    <li>
+      Dictionary is non-empty, i.e. at least 1 valid rule is defined
+    </li>
+  </ol>
   <input type=submit value="Draw snowflake">
 </form>
 
