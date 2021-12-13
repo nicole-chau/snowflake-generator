@@ -1,0 +1,29 @@
+<!doctype html>
+<title>Snowflake Generator - Result</title>
+<h1>Snowflake Generator</h1>
+<h2>Result:</h2>
+<img src="./static/{{filename}}" width="300">
+<br>
+The image above was generated with the following setings:
+<br>
+<table border="1">
+    <tr>
+        <td>Axiom</td>
+        <td>{{ axiom }}</td>
+    </tr>
+    <tr>
+        <td>Number of iterations</td>
+        <td>{{ num_iter }}</td>
+    </tr>
+</table>
+Rules:
+<ul>
+    {% for key, value in rules %} 
+        <li>{{ key }} &rarr; {{ value[0] }}</li>
+    {% endfor %}
+</ul>
+<br>
+<br>
+<form action="/draw">
+    <input type="submit" value="Draw another snowflake">
+</form>

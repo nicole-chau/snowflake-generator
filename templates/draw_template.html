@@ -1,0 +1,70 @@
+<!doctype html>
+<title>Snowflake Generator - Draw</title>
+<h1>Snowflake Generator</h1>
+<h2>Draw:</h2>
+This generator uses a l-system to generate a snowflake pattern procedurally. 
+<br>
+The default l-system grammar used is displayed below.
+<br>
+Draw a snowflake with the default settings or adjust the pattern using the options below.
+<br>
+<div>
+  <h3>L-System Grammar Symbols:</h3>
+  <table border="1">
+    <thead>
+      <td>Symbol</td>
+      <td>Rendering instruction</td>
+    </thead>
+    <tbody>
+      <tr>
+        <td>F, X</td>
+        <td>go forward by specified distance</td>
+      </tr>
+      <tr>
+        <td>-, +</td>
+        <td>rotate right/left</td>
+      </tr>
+      <tr>
+        <td>[</td>
+        <td>save current state (position and orientation)</td>
+      </tr>
+      <tr>
+        <td>]</td>
+        <td>restore previous state (position and orientation)</td>
+      </tr>
+      <tr>
+        <td>&lt;</td>
+        <td>halve draw distance</td>
+      </tr>
+      <tr>
+        <td>&gt;</td>
+        <td>double draw distance</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<h3>Settings:</h3>
+<form method=post enctype=multipart/form-data>
+  Axiom: <input type=text name=axiom value="FX">
+  <br>
+  Number of L-System Iterations: 
+  <input type=number name=iterations min="1" max="5" value="2" required>
+  <br>
+  Default Rules:
+  <ul>
+      {% for key, value in rules %} 
+          <li>{{ key }} &rarr; {{ value[0] }}</li>
+      {% endfor %}
+  </ul>
+  <input type=file name=rules>
+  <input type=submit value="Draw snowflake">
+</form>
+
+<form action="/draw">
+  <input type=submit value="Reset settings">
+</form>
+<br>
+
+{% for message in get_flashed_messages() %}
+  <div class="flash">{{ message }}</div>
+{% endfor %}
