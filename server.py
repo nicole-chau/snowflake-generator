@@ -2,14 +2,14 @@
 import json
 import os
 
+# snowflake.py
+from snowflake import *
+
 # web dev modules
 from flask import Flask, flash, render_template, request, url_for, redirect
 
 # image module
 from PIL import Image
-
-# snowflake.py
-from snowflake import *
 
 # Flask constants, do not change!
 ALLOWED_SYMBOLS = {'F', 'X', '-', '+', '[', ']', '<', '>'}
