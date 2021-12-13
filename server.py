@@ -5,9 +5,11 @@ import os
 # web dev modules
 from flask import Flask, flash, render_template, request, url_for, redirect
 
-from snowflake import *
-
+# image module
 from PIL import Image
+
+# snowflake.py
+from snowflake import *
 
 # Flask constants, do not change!
 ALLOWED_SYMBOLS = {'F', 'X', '-', '+', '[', ']', '<', '>'}
@@ -38,7 +40,7 @@ def parse_rules(rules_json):
     Extracts rules from json file into a dictionary to create l system with
 
     Args:
-        rules_json (str): filename of .json file containing rules 
+        rules_json (str): filename of .json file containing rules
 
     Returns:
         rules (dict): dictionary containing rules for l system
@@ -50,20 +52,20 @@ def parse_rules(rules_json):
 
 def create_snowflake(axiom, num_iter, rules):
     """
-    Creates the snowflake drawing by initializing L-system and Snowflake turtle. 
-    Saves the image after turtle is done drawing.
+    Creates the snowflake drawing by initializing L-system
+    and Snowflake turtle. Saves the image after turtle is done drawing.
 
     Args:
         rules (dict): dictionary of rules for L-system
                       NOTE: makes several assumptions about input rules:
                       1. Precondition only consists of 1 symbol
                       2. Rules only contain valid symbols
-                      3. Dictionary is non-empty, i.e. at least 1 valid rule is defined
-    
+                      3. Dictionary is non-empty,
+                         i.e. at least 1 valid rule is defined
+
     Returns:
         None
     """
-    print("HI")
     lsystem = LSystem(rules)
     processed_string = lsystem.process_all(int(num_iter), axiom)
 
@@ -83,8 +85,6 @@ def home():
     Returns:
         The required return by Flask so the user is redirected to the /draw URL
     """
-    rules = parse_rules("rules.json")
-    # return render_template("draw_template.html", rules=rules.items())
     return redirect("/draw")
 
 
@@ -98,7 +98,7 @@ def handle_draw():
 
     POST requests
         1. flash and redirect back to /upload if axiom contains invalid symbols
-        2. redirecto to /result with axiom and num_iter query parameters set to 
+        2. redirecto to /result with axiom and num_iter query parameters set to
            values from form
 
     Args:
@@ -118,31 +118,36 @@ def handle_draw():
         # if no file uploaded then use default "rules.json" file
         if rules_json == "":
             rules_json = "rules.json"
-        
-        # check that uploaded file is json file 
+
+        # check that uploaded file is json file
         if not rules_json.endswith(".json"):
             flash("Please upload a json file")
             return redirect("/")
 
         axiom = request.form.get("axiom")
-        # check for invalid symbols in axiom input 
+        # check for invalid symbols in axiom input
         for char in axiom:
             if char not in ALLOWED_SYMBOLS:
-                flash("The only symbols allowed are: 'F', 'X', '-', '+', '[', ']', '<', '>'")
+                flash("The only symbols allowed are: " +
+                      "'F', 'X', '-', '+', '[', ']', '<', '>'")
                 return redirect("/")
 
         # get number of l system iterations
         num_iter = request.form.get("iterations")
-        
-        return redirect(url_for("handle_result", axiom=axiom, num_iter=num_iter, rules_json=rules_json))
+
+        return redirect(url_for("handle_result",
+                                axiom=axiom,
+                                num_iter=num_iter,
+                                rules_json=rules_json))
+
 
 @app.route("/result", methods=["GET"])
 def handle_result():
     """
     Method that handles the /result route.
 
-    The specified axiom, number of iterations and rules come as the query parameters
-    "axiom", "num_iter" and "rules_json" respectively.
+    The specified axiom, number of iterations and rules come as the
+    query parameters "axiom", "num_iter" and "rules_json" respectively.
 
     GET requests:
         1. Use create_snowflake() to generate the image with turtle
@@ -164,9 +169,9 @@ def handle_result():
 
     create_snowflake(axiom, num_iter, rules)
     eps_to_png("static/snowflake.eps")
-    return render_template("result_template.html", 
-                           filename="snowflake.png", 
-                           axiom=axiom, 
+    return render_template("result_template.html",
+                           filename="snowflake.png",
+                           axiom=axiom,
                            num_iter=num_iter,
                            rules=rules.items())
 

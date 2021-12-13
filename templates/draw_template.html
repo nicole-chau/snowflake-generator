@@ -1,10 +1,12 @@
 <!doctype html>
 <title>Snowflake Generator - Draw</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 <h1>Snowflake Generator</h1>
-<h2>Draw:</h2>
-This generator uses a l-system to generate a snowflake pattern procedurally. 
+<h2>Draw</h2>
+This generator uses a L-system to generate a snowflake pattern procedurally. 
 <br>
-The default l-system grammar used is displayed below.
+The default L-system grammar used is displayed below.
 <br>
 Draw a snowflake with the default settings or adjust the pattern using the options below.
 <br>
@@ -56,11 +58,11 @@ Draw a snowflake with the default settings or adjust the pattern using the optio
           <li>{{ key }} &rarr; {{ value[0] }}</li>
       {% endfor %}
   </ul>
-  <br>
   Upload .json file containing customized rules:
   <input type=file name=rules>
   <br>
   If no file is uploaded then the default rules will be applied.
+  <br>
   NOTE: Assumed that any user defined .json file for rules satisfies the following conditions:
   <ol>
     <li>
