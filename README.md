@@ -25,6 +25,14 @@ On the home page of the website, a description of the application is displayed a
 Default snowflake pattern:  
 <img src="https://user-images.githubusercontent.com/74137085/145895972-e3ebecf7-e670-440b-ad0b-c6ce6aa84228.png" alt="alt text" width="300px" height="300px">
 
+Class defintions (+ dunder methods):
+- Snowflake (\__init__)
+- LSystem (\__init__, \__str__)
+
+First-party module: json
+
+Third-party modules: turtle, flask
+
 ## Installation / Running Instructions
 Installation requirements:
 ```
